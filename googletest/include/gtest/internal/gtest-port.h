@@ -730,7 +730,6 @@ typedef struct _RTL_CRITICAL_SECTION GTEST_CRITICAL_SECTION;
 #define GTEST_HAVE_ATTRIBUTE_(x) __has_attribute(x)
 #else
 #define GTEST_HAVE_ATTRIBUTE_(x) 0
-<<<<<<< HEAD
 #endif
 
 // GTEST_HAVE_FEATURE_
@@ -743,20 +742,6 @@ typedef struct _RTL_CRITICAL_SECTION GTEST_CRITICAL_SECTION;
 #define GTEST_HAVE_FEATURE_(x) 0
 #endif
 
-=======
-#endif
-
-// GTEST_HAVE_FEATURE_
-//
-// A function-like feature checking macro that is a wrapper around
-// `__has_feature`.
-#ifdef __has_feature
-#define GTEST_HAVE_FEATURE_(x) __has_feature(x)
-#else
-#define GTEST_HAVE_FEATURE_(x) 0
-#endif
-
->>>>>>> c7bff801ce9a6bebb571ebd7ab66a032914a9322
 // Use this annotation after a variable or parameter declaration to tell the
 // compiler the variable/parameter does not have to be used.
 // Example:
@@ -883,7 +868,7 @@ typedef struct _RTL_CRITICAL_SECTION GTEST_CRITICAL_SECTION;
 
 // _LIBCPP_VERSION is defined by the libc++ library from the LLVM project.
 #if !defined(GTEST_HAS_CXXABI_H_)
-#if defined(__GLIBCXX__) || (defined(_LIBCPP_VERSION) && !defined(_MSC_VER))
+#if defined(__GLIBCXX__) || (defined(_LIBCPP_VERSION) && !(defined(_MSC_VER) || defined(CAPS_COMPILER_MULTI)))
 #define GTEST_HAS_CXXABI_H_ 1
 #else
 #define GTEST_HAS_CXXABI_H_ 0
@@ -1020,15 +1005,9 @@ class GTEST_API_ RE {
   regex_t partial_regex_;  // For PartialMatch().
 
 #else  // GTEST_USES_SIMPLE_RE
-<<<<<<< HEAD
 
   std::string full_pattern_;  // For FullMatch();
 
-=======
-
-  std::string full_pattern_;  // For FullMatch();
-
->>>>>>> c7bff801ce9a6bebb571ebd7ab66a032914a9322
 #endif
 };
 GTEST_DISABLE_MSC_WARNINGS_POP_()  // 4251
@@ -1275,7 +1254,6 @@ class GTEST_API_ Notification {
     notified_ = true;
     cv_.notify_all();
   }
-<<<<<<< HEAD
 
   // Blocks until the controller thread notifies. Must be called from a test
   // thread.
@@ -1284,16 +1262,6 @@ class GTEST_API_ Notification {
     cv_.wait(lock, [this]() { return notified_; });
   }
 
-=======
-
-  // Blocks until the controller thread notifies. Must be called from a test
-  // thread.
-  void WaitForNotification() {
-    std::unique_lock<std::mutex> lock(mu_);
-    cv_.wait(lock, [this]() { return notified_; });
-  }
-
->>>>>>> c7bff801ce9a6bebb571ebd7ab66a032914a9322
  private:
   std::mutex mu_;
   std::condition_variable cv_;
