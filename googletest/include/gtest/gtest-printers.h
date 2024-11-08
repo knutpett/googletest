@@ -527,7 +527,7 @@ GTEST_API_ void PrintTo(__int128_t v, ::std::ostream* os);
 // then multiply to possibly get the original value again.
 template <typename FloatType>
 int AppropriateResolution(FloatType val) {
-  int full = std::numeric_limits<FloatType>::max_digits10;
+  const int full = std::numeric_limits<FloatType>::max_digits10;
   if (val < 0) val = -val;
 
   if (val < 1000000) {
@@ -577,14 +577,14 @@ int AppropriateResolution(FloatType val) {
 }
 
 inline void PrintTo(float f, ::std::ostream* os) {
-  auto old_precision = os->precision();
+  const auto old_precision = os->precision();
   os->precision(AppropriateResolution(f));
   *os << f;
   os->precision(old_precision);
 }
 
 inline void PrintTo(double d, ::std::ostream* os) {
-  auto old_precision = os->precision();
+  const auto old_precision = os->precision();
   os->precision(AppropriateResolution(d));
   *os << d;
   os->precision(old_precision);

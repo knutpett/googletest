@@ -2068,8 +2068,8 @@ inline int IsATTY(int fd) {
   // DoIsATTY might change errno (for example ENOTTY in case you redirect stdout
   // to a file on Linux), which is unexpected, so save the previous value, and
   // restore it after the call.
-  int savedErrno = errno;
-  int isAttyValue = DoIsATTY(fd);
+  const int savedErrno = errno;
+  const int isAttyValue = DoIsATTY(fd);
   errno = savedErrno;
 
   return isAttyValue;

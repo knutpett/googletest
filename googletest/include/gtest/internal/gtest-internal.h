@@ -506,9 +506,9 @@ struct SuiteApiResolver : T {
   static SetUpTearDownSuiteFuncType GetSetUpCaseOrSuite(const char* filename,
                                                         int line_num) {
 #ifndef GTEST_REMOVE_LEGACY_TEST_CASEAPI_
-    SetUpTearDownSuiteFuncType test_case_fp =
+    const SetUpTearDownSuiteFuncType test_case_fp =
         GetNotDefaultOrNull(&T::SetUpTestCase, &Test::SetUpTestCase);
-    SetUpTearDownSuiteFuncType test_suite_fp =
+    const SetUpTearDownSuiteFuncType test_suite_fp =
         GetNotDefaultOrNull(&T::SetUpTestSuite, &Test::SetUpTestSuite);
 
     GTEST_CHECK_(!test_case_fp || !test_suite_fp)
@@ -527,9 +527,9 @@ struct SuiteApiResolver : T {
   static SetUpTearDownSuiteFuncType GetTearDownCaseOrSuite(const char* filename,
                                                            int line_num) {
 #ifndef GTEST_REMOVE_LEGACY_TEST_CASEAPI_
-    SetUpTearDownSuiteFuncType test_case_fp =
+    const SetUpTearDownSuiteFuncType test_case_fp =
         GetNotDefaultOrNull(&T::TearDownTestCase, &Test::TearDownTestCase);
-    SetUpTearDownSuiteFuncType test_suite_fp =
+    const SetUpTearDownSuiteFuncType test_suite_fp =
         GetNotDefaultOrNull(&T::TearDownTestSuite, &Test::TearDownTestSuite);
 
     GTEST_CHECK_(!test_case_fp || !test_suite_fp)
@@ -647,7 +647,7 @@ inline const char* SkipComma(const char* str) {
 // Returns the prefix of 'str' before the first comma in it; returns
 // the entire string if it contains no comma.
 inline std::string GetPrefixUntilComma(const char* str) {
-  const char* comma = strchr(str, ',');
+  const char* const comma = strchr(str, ',');
   return comma == nullptr ? str : std::string(str, comma);
 }
 

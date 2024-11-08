@@ -61,7 +61,7 @@ namespace internal {
 inline std::string CanonicalizeForStdLibVersioning(std::string s) {
   static const char prefix[] = "std::__";
   if (s.compare(0, strlen(prefix), prefix) == 0) {
-    std::string::size_type end = s.find("::", strlen(prefix));
+    const std::string::size_type end = s.find("::", strlen(prefix));
     if (end != s.npos) {
       // Erase everything between the initial `std` and the second `::`.
       s.erase(strlen("std"), end - strlen("std"));

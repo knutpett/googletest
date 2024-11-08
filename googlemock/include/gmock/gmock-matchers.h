@@ -641,7 +641,7 @@ class TuplePrefix {
     const Value& value = std::get<N - 1>(values);
     StringMatchResultListener listener;
     if (!matcher.MatchAndExplain(value, &listener)) {
-      *os << "  Expected arg #" << N - 1 << ": ";
+      *os << "  Expected arg #" << (N - 1) << ": ";
       std::get<N - 1>(matchers).DescribeTo(os);
       *os << "\n           Actual: ";
       // We remove the reference in type Value to prevent the
@@ -4106,7 +4106,7 @@ class ArgsMatcherImpl : public MatcherInterface<ArgsTuple> {
     // This pattern looks suspiciously like we may have mismatched parentheses
     // and may have been trying to use the first operation of the comma operator
     // as a member of the array, so Clang warns that we may have made a mistake.
-    const char* dummy[] = {
+    const char* const dummy[] = {
         "", (static_cast<void>(*os << sep << "#" << k), sep = ", ")...};
     (void)dummy;
     *os << ") ";

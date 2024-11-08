@@ -561,9 +561,9 @@ class ParameterizedTestSuiteInfo : public ParameterizedTestSuiteInfoBase {
            gen_it != instantiations_.end(); ++gen_it) {
         const std::string& instantiation_name = gen_it->name;
         ParamGenerator<ParamType> generator((*gen_it->generator)());
-        ParamNameGeneratorFunc* name_func = gen_it->name_func;
-        const char* file = gen_it->file;
-        int line = gen_it->line;
+        ParamNameGeneratorFunc* const name_func = gen_it->name_func;
+        const char* const file = gen_it->file;
+        const int line = gen_it->line;
 
         std::string test_suite_name;
         if (!instantiation_name.empty())

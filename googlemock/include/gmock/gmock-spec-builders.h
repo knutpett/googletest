@@ -1505,7 +1505,7 @@ class FunctionMocker<R(Args...)> final : public UntypedFunctionMockerBase {
     for (UntypedOnCallSpecs::const_reverse_iterator it =
              untyped_on_call_specs_.rbegin();
          it != untyped_on_call_specs_.rend(); ++it) {
-      const OnCallSpec<F>* spec = static_cast<const OnCallSpec<F>*>(*it);
+      const OnCallSpec<F>* const spec = static_cast<const OnCallSpec<F>*>(*it);
       if (spec->Matches(args)) return spec;
     }
 
@@ -1672,7 +1672,7 @@ class FunctionMocker<R(Args...)> final : public UntypedFunctionMockerBase {
     const ArgumentTuple& args =
         *static_cast<const ArgumentTuple*>(untyped_args);
     MutexLock l(&g_gmock_mutex);
-    TypedExpectation<F>* exp = this->FindMatchingExpectationLocked(args);
+    TypedExpectation<F>* const exp = this->FindMatchingExpectationLocked(args);
     if (exp == nullptr) {  // A match wasn't found.
       this->FormatUnexpectedCallMessageLocked(args, what, why);
       return nullptr;

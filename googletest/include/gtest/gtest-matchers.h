@@ -404,7 +404,7 @@ class MatcherBase : private MatcherDescriberInterface {
     static const M& Get(const MatcherBase& m) {
       // When inlined along with Init, need to be explicit to avoid violating
       // strict aliasing rules.
-      const M* ptr =
+      const M* const ptr =
           static_cast<const M*>(static_cast<const void*>(&m.buffer_));
       return *ptr;
     }
