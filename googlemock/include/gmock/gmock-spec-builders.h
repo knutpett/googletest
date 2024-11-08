@@ -407,25 +407,36 @@ class GTEST_API_ Mock {
   template <typename MockClass>
   friend class internal::StrictMockImpl;
 
+  template<typename MockClass>
+  friend class NiceMock;
+
   // Tells Google Mock to allow uninteresting calls on the given mock
   // object.
   static void AllowUninterestingCalls(uintptr_t mock_obj)
       GTEST_LOCK_EXCLUDED_(internal::g_gmock_mutex);
+
+  static void AllowUninterestingCalls(const void* mock_obj) { AllowUninterestingCalls(reinterpret_cast<uintptr_t>(mock_obj)); }
 
   // Tells Google Mock to warn the user about uninteresting calls on
   // the given mock object.
   static void WarnUninterestingCalls(uintptr_t mock_obj)
       GTEST_LOCK_EXCLUDED_(internal::g_gmock_mutex);
 
+  static void WarnUninterestingCalls(const void* mock_obj) { WarnUninterestingCalls(reinterpret_cast<uintptr_t>(mock_obj)); }
+
   // Tells Google Mock to fail uninteresting calls on the given mock
   // object.
   static void FailUninterestingCalls(uintptr_t mock_obj)
       GTEST_LOCK_EXCLUDED_(internal::g_gmock_mutex);
 
+  static void FailUninterestingCalls(const void* mock_obj) { FailUninterestingCalls(reinterpret_cast<uintptr_t>(mock_obj)); }
+
   // Tells Google Mock the given mock object is being destroyed and
   // its entry in the call-reaction table should be removed.
   static void UnregisterCallReaction(uintptr_t mock_obj)
       GTEST_LOCK_EXCLUDED_(internal::g_gmock_mutex);
+
+  static void UnregisterCallReaction(const void* mock_obj) { UnregisterCallReaction(reinterpret_cast<uintptr_t>(mock_obj)); }
 
   // Returns the reaction Google Mock will have on uninteresting calls
   // made on the given mock object.
@@ -1399,6 +1410,10 @@ class Cleanup final {
   std::function<void()> f_;
 };
 
+#ifdef CAPS_COMPILER_VC
+#pragma warning( push )
+#pragma warning( disable : 4623 )
+#endif
 struct UntypedFunctionMockerBase::UninterestingCallCleanupHandler {
   CallReaction reaction;
   std::stringstream& ss;
@@ -1407,7 +1422,14 @@ struct UntypedFunctionMockerBase::UninterestingCallCleanupHandler {
     ReportUninterestingCall(reaction, ss.str());
   }
 };
+#ifdef CAPS_COMPILER_VC
+#pragma warning( pop )
+#endif
 
+#ifdef CAPS_COMPILER_VC
+#pragma warning( push )
+#pragma warning( disable : 4623 )
+#endif
 struct UntypedFunctionMockerBase::FailureCleanupHandler {
   std::stringstream& ss;
   std::stringstream& why;
@@ -1433,6 +1455,9 @@ struct UntypedFunctionMockerBase::FailureCleanupHandler {
     }
   }
 };
+#ifdef CAPS_COMPILER_VC
+#pragma warning( pop )
+#endif
 
 template <typename F>
 class FunctionMocker;

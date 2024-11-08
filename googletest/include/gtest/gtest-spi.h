@@ -153,10 +153,10 @@ GTEST_DISABLE_MSC_WARNINGS_POP_()  //  4251
       static void Execute() { statement; }                                    \
     };                                                                        \
     ::testing::TestPartResultArray gtest_failures;                            \
-    ::testing::internal::SingleFailureChecker gtest_checker(                  \
+    const ::testing::internal::SingleFailureChecker gtest_checker(            \
         &gtest_failures, ::testing::TestPartResult::kFatalFailure, (substr)); \
     {                                                                         \
-      ::testing::ScopedFakeTestPartResultReporter gtest_reporter(             \
+      const ::testing::ScopedFakeTestPartResultReporter gtest_reporter(       \
           ::testing::ScopedFakeTestPartResultReporter::                       \
               INTERCEPT_ONLY_CURRENT_THREAD,                                  \
           &gtest_failures);                                                   \
@@ -171,10 +171,10 @@ GTEST_DISABLE_MSC_WARNINGS_POP_()  //  4251
       static void Execute() { statement; }                                    \
     };                                                                        \
     ::testing::TestPartResultArray gtest_failures;                            \
-    ::testing::internal::SingleFailureChecker gtest_checker(                  \
+    const ::testing::internal::SingleFailureChecker gtest_checker(            \
         &gtest_failures, ::testing::TestPartResult::kFatalFailure, (substr)); \
     {                                                                         \
-      ::testing::ScopedFakeTestPartResultReporter gtest_reporter(             \
+      const ::testing::ScopedFakeTestPartResultReporter gtest_reporter(       \
           ::testing::ScopedFakeTestPartResultReporter::INTERCEPT_ALL_THREADS, \
           &gtest_failures);                                                   \
       GTestExpectFatalFailureHelper::Execute();                               \

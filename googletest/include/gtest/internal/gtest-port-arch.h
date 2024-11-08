@@ -117,6 +117,8 @@
 #define GTEST_OS_NXP_QN9090 1
 #elif defined(NRF52)
 #define GTEST_OS_NRF52 1
+#elif defined(__ghs__)
+#define GTEST_OS_GHS 1
 #endif  // __CYGWIN__
 
 #endif  // GOOGLETEST_INCLUDE_GTEST_INTERNAL_GTEST_PORT_ARCH_H_

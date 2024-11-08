@@ -1077,6 +1077,7 @@ class ReturnAction final {
 
   R value_;
 };
+<<<<<<< HEAD
 
 // A specialization of ReturnAction<R> when R is ByMoveWrapper<T> for some T.
 //
@@ -1107,6 +1108,38 @@ class ReturnAction<ByMoveWrapper<T>> final {
     bool called = false;
   };
 
+=======
+
+// A specialization of ReturnAction<R> when R is ByMoveWrapper<T> for some T.
+//
+// This version applies the type system-defeating hack of moving from T even in
+// the const call operator, checking at runtime that it isn't called more than
+// once, since the user has declared their intent to do so by using ByMove.
+template <typename T>
+class ReturnAction<ByMoveWrapper<T>> final {
+ public:
+  explicit ReturnAction(ByMoveWrapper<T> wrapper)
+      : state_(new State(std::move(wrapper.payload))) {}
+
+  T operator()() const {
+    GTEST_CHECK_(!state_->called)
+        << "A ByMove() action must be performed at most once.";
+
+    state_->called = true;
+    return std::move(state_->value);
+  }
+
+ private:
+  // We store our state on the heap so that we are copyable as required by
+  // Action, despite the fact that we are stateful and T may not be copyable.
+  struct State {
+    explicit State(T&& value_in) : value(std::move(value_in)) {}
+
+    T value;
+    bool called = false;
+  };
+
+>>>>>>> c7bff801ce9a6bebb571ebd7ab66a032914a9322
   const std::shared_ptr<State> state_;
 };
 
@@ -1342,8 +1375,17 @@ struct InvokeMethodWithoutArgsAction {
   Class* const obj_ptr;
   const MethodPtr method_ptr;
 
+<<<<<<< HEAD
   using ReturnType =
       decltype((std::declval<Class*>()->*std::declval<MethodPtr>())());
+=======
+#if __cplusplus < 202002L
+  using ReturnType =
+      decltype((std::declval<Class*>()->*std::declval<MethodPtr>())());
+#else
+  using ReturnType = typename std::invoke_result<MethodPtr, Class*>::type;
+#endif
+>>>>>>> c7bff801ce9a6bebb571ebd7ab66a032914a9322
 
   template <typename... Args>
   ReturnType operator()(const Args&...) const {
@@ -1732,6 +1774,7 @@ struct ReturnPointeeAction {
 #if GTEST_HAS_EXCEPTIONS
 template <typename T>
 struct ThrowAction {
+  ThrowAction() = delete;
   T exception;
   // We use a conversion operator to adapt to any return type.
   template <typename R, typename... Args>
@@ -2239,7 +2282,7 @@ template <typename F, typename Impl>
   class name##Action {                                                        \
    public:                                                                    \
     explicit name##Action() noexcept {}                                       \
-    name##Action(const name##Action&) noexcept {}                             \
+    [[maybe_unused]] name##Action(const name##Action&) noexcept {}                             \
     template <typename F>                                                     \
     operator ::testing::Action<F>() const {                                   \
       return ::testing::internal::MakeAction<F, gmock_Impl>();                \

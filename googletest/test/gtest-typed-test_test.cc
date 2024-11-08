@@ -30,6 +30,7 @@
 #include "test/gtest-typed-test_test.h"
 
 #include <set>
+#include <stdexcept>
 #include <string>
 #include <type_traits>
 #include <vector>
@@ -172,6 +173,7 @@ class TypedTestNames {
     if (std::is_same<T, int>::value) {
       return std::string("int") + ::testing::PrintToString(i);
     }
+    throw std::logic_error("Should not be here");
   }
 };
 
@@ -320,6 +322,7 @@ class TypeParametrizedTestNames {
     if (std::is_same<T, int>::value) {
       return std::string("parInt") + ::testing::PrintToString(i);
     }
+    throw std::logic_error("Should not be here");
   }
 };
 

@@ -156,8 +156,11 @@ class GTEST_INTERNAL_EMPTY_BASE_CLASS NiceMock
                 "https://google.github.io/googletest/"
                 "gmock_cook_book.html#NiceStrictNaggy");
   NiceMock() : MockClass() {
+    #ifndef CAPS_COMPILER_MULTI
+    // Removed this assert since multi compiler does and will not comply to this requirement
     static_assert(sizeof(*this) == sizeof(MockClass),
                   "The impl subclass shouldn't introduce any padding");
+    #endif
   }
 
   // Ideally, we would inherit base class's constructors through a using
@@ -169,17 +172,23 @@ class GTEST_INTERNAL_EMPTY_BASE_CLASS NiceMock
   // made explicit.
   template <typename A>
   explicit NiceMock(A&& arg) : MockClass(std::forward<A>(arg)) {
+    #ifndef CAPS_COMPILER_MULTI
+    // Removed this assert since multi compiler does and will not comply to this requirement
     static_assert(sizeof(*this) == sizeof(MockClass),
-                  "The impl subclass shouldn't introduce any padding");
+                 "The impl subclass shouldn't introduce any padding");
+    #endif
   }
 
   template <typename TArg1, typename TArg2, typename... An>
   NiceMock(TArg1&& arg1, TArg2&& arg2, An&&... args)
       : MockClass(std::forward<TArg1>(arg1), std::forward<TArg2>(arg2),
                   std::forward<An>(args)...) {
+    #ifndef CAPS_COMPILER_MULTI
+    // Removed this assert since multi compiler does and will not comply to this requirement
     static_assert(sizeof(*this) == sizeof(MockClass),
-                  "The impl subclass shouldn't introduce any padding");
-  }
+                 "The impl subclass shouldn't introduce any padding");
+    #endif
+}
 
  private:
   NiceMock(const NiceMock&) = delete;
@@ -198,9 +207,12 @@ class GTEST_INTERNAL_EMPTY_BASE_CLASS NaggyMock
 
  public:
   NaggyMock() : MockClass() {
+    #ifndef CAPS_COMPILER_MULTI
+    // Removed this assert since multi compiler does and will not comply to this requirement
     static_assert(sizeof(*this) == sizeof(MockClass),
-                  "The impl subclass shouldn't introduce any padding");
-  }
+                 "The impl subclass shouldn't introduce any padding");
+    #endif
+ }
 
   // Ideally, we would inherit base class's constructors through a using
   // declaration, which would preserve their visibility. However, many existing
@@ -211,16 +223,22 @@ class GTEST_INTERNAL_EMPTY_BASE_CLASS NaggyMock
   // made explicit.
   template <typename A>
   explicit NaggyMock(A&& arg) : MockClass(std::forward<A>(arg)) {
+    #ifndef CAPS_COMPILER_MULTI
+    // Removed this assert since multi compiler does and will not comply to this requirement
     static_assert(sizeof(*this) == sizeof(MockClass),
-                  "The impl subclass shouldn't introduce any padding");
+                 "The impl subclass shouldn't introduce any padding");
+    #endif
   }
 
   template <typename TArg1, typename TArg2, typename... An>
   NaggyMock(TArg1&& arg1, TArg2&& arg2, An&&... args)
       : MockClass(std::forward<TArg1>(arg1), std::forward<TArg2>(arg2),
                   std::forward<An>(args)...) {
+    #ifndef CAPS_COMPILER_MULTI
+    // Removed this assert since multi compiler does and will not comply to this requirement
     static_assert(sizeof(*this) == sizeof(MockClass),
-                  "The impl subclass shouldn't introduce any padding");
+                 "The impl subclass shouldn't introduce any padding");
+    #endif
   }
 
  private:
@@ -240,8 +258,11 @@ class GTEST_INTERNAL_EMPTY_BASE_CLASS StrictMock
       "https://google.github.io/googletest/"
       "gmock_cook_book.html#NiceStrictNaggy");
   StrictMock() : MockClass() {
+    #ifndef CAPS_COMPILER_MULTI
+    // Removed this assert since multi compiler does and will not comply to this requirement
     static_assert(sizeof(*this) == sizeof(MockClass),
-                  "The impl subclass shouldn't introduce any padding");
+                 "The impl subclass shouldn't introduce any padding");
+    #endif
   }
 
   // Ideally, we would inherit base class's constructors through a using
@@ -253,16 +274,22 @@ class GTEST_INTERNAL_EMPTY_BASE_CLASS StrictMock
   // made explicit.
   template <typename A>
   explicit StrictMock(A&& arg) : MockClass(std::forward<A>(arg)) {
+    #ifndef CAPS_COMPILER_MULTI
+    // Removed this assert since multi compiler does and will not comply to this requirement
     static_assert(sizeof(*this) == sizeof(MockClass),
-                  "The impl subclass shouldn't introduce any padding");
+                 "The impl subclass shouldn't introduce any padding");
+    #endif
   }
 
   template <typename TArg1, typename TArg2, typename... An>
   StrictMock(TArg1&& arg1, TArg2&& arg2, An&&... args)
       : MockClass(std::forward<TArg1>(arg1), std::forward<TArg2>(arg2),
                   std::forward<An>(args)...) {
+    #ifndef CAPS_COMPILER_MULTI
+    // Removed this assert since multi compiler does and will not comply to this requirement
     static_assert(sizeof(*this) == sizeof(MockClass),
-                  "The impl subclass shouldn't introduce any padding");
+                 "The impl subclass shouldn't introduce any padding");
+    #endif
   }
 
  private:

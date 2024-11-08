@@ -4123,6 +4123,8 @@ static bool PortableLocaltime(time_t seconds, struct tm* out) {
   if (tm_ptr == nullptr) return false;
   *out = *tm_ptr;
   return true;
+#elif defined(CAPS_COMPILER_MULTI)
+  return localtime_r(&seconds, out) != nullptr;
 #elif defined(__STDC_LIB_EXT1__)
   // Uses localtime_s when available as localtime_r is only available from
   // C23 standard.

@@ -484,6 +484,8 @@ typedef struct _RTL_CRITICAL_SECTION GTEST_CRITICAL_SECTION;
 // Exception handling is in effect by default in HP aCC compiler. It has to
 // be turned of by +noeh compiler option if desired.
 #define GTEST_HAS_EXCEPTIONS 1
+#elif defined(CAPS_COMPILER_MULTI)
+#define GTEST_HAS_EXCEPTIONS 1
 #else
 // For other compilers, we assume exceptions are disabled to be
 // conservative.
@@ -670,9 +672,9 @@ typedef struct _RTL_CRITICAL_SECTION GTEST_CRITICAL_SECTION;
 // Determines whether to support type-driven tests.
 
 // Typed tests need <typeinfo> and variadic macros, which GCC, VC++ 8.0,
-// Sun Pro CC, IBM Visual Age, and HP aCC support.
+// Sun Pro CC, IBM Visual Age, and HP aCC and Green Hills MULTI support.
 #if defined(__GNUC__) || defined(_MSC_VER) || defined(__SUNPRO_CC) || \
-    defined(__IBMCPP__) || defined(__HP_aCC)
+    defined(__IBMCPP__) || defined(__HP_aCC) || defined(__ghs__)
 #define GTEST_HAS_TYPED_TEST 1
 #define GTEST_HAS_TYPED_TEST_P 1
 #endif
@@ -728,6 +730,7 @@ typedef struct _RTL_CRITICAL_SECTION GTEST_CRITICAL_SECTION;
 #define GTEST_HAVE_ATTRIBUTE_(x) __has_attribute(x)
 #else
 #define GTEST_HAVE_ATTRIBUTE_(x) 0
+<<<<<<< HEAD
 #endif
 
 // GTEST_HAVE_FEATURE_
@@ -740,6 +743,20 @@ typedef struct _RTL_CRITICAL_SECTION GTEST_CRITICAL_SECTION;
 #define GTEST_HAVE_FEATURE_(x) 0
 #endif
 
+=======
+#endif
+
+// GTEST_HAVE_FEATURE_
+//
+// A function-like feature checking macro that is a wrapper around
+// `__has_feature`.
+#ifdef __has_feature
+#define GTEST_HAVE_FEATURE_(x) __has_feature(x)
+#else
+#define GTEST_HAVE_FEATURE_(x) 0
+#endif
+
+>>>>>>> c7bff801ce9a6bebb571ebd7ab66a032914a9322
 // Use this annotation after a variable or parameter declaration to tell the
 // compiler the variable/parameter does not have to be used.
 // Example:
@@ -1003,9 +1020,15 @@ class GTEST_API_ RE {
   regex_t partial_regex_;  // For PartialMatch().
 
 #else  // GTEST_USES_SIMPLE_RE
+<<<<<<< HEAD
 
   std::string full_pattern_;  // For FullMatch();
 
+=======
+
+  std::string full_pattern_;  // For FullMatch();
+
+>>>>>>> c7bff801ce9a6bebb571ebd7ab66a032914a9322
 #endif
 };
 GTEST_DISABLE_MSC_WARNINGS_POP_()  // 4251
@@ -1252,6 +1275,7 @@ class GTEST_API_ Notification {
     notified_ = true;
     cv_.notify_all();
   }
+<<<<<<< HEAD
 
   // Blocks until the controller thread notifies. Must be called from a test
   // thread.
@@ -1260,6 +1284,16 @@ class GTEST_API_ Notification {
     cv_.wait(lock, [this]() { return notified_; });
   }
 
+=======
+
+  // Blocks until the controller thread notifies. Must be called from a test
+  // thread.
+  void WaitForNotification() {
+    std::unique_lock<std::mutex> lock(mu_);
+    cv_.wait(lock, [this]() { return notified_; });
+  }
+
+>>>>>>> c7bff801ce9a6bebb571ebd7ab66a032914a9322
  private:
   std::mutex mu_;
   std::condition_variable cv_;

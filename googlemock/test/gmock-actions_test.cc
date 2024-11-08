@@ -223,7 +223,7 @@ TEST(TypeTraits, IsInvocableRV) {
   // non-moveable objects, everything should work fine for non-moveable rsult
   // types too.
 #if defined(GTEST_INTERNAL_CPLUSPLUS_LANG) && \
-    GTEST_INTERNAL_CPLUSPLUS_LANG >= 201703L
+    GTEST_INTERNAL_CPLUSPLUS_LANG >= 201703L && !defined(CAPS_COMPILER_VC)
   {
     struct NonMoveable {
       NonMoveable() = default;

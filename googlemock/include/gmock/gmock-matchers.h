@@ -5526,6 +5526,7 @@ PolymorphicMatcher<internal::ExceptionMatcherImpl<Err>> ThrowsMessage(
   class full_name : public ::testing::internal::MatcherBaseImpl<               \
                         full_name<GMOCK_INTERNAL_MATCHER_TYPE_PARAMS(args)>> { \
    public:                                                                     \
+    full_name() = delete;                                                      \
     using full_name::MatcherBaseImpl::MatcherBaseImpl;                         \
     template <typename arg_type>                                               \
     class gmock_Impl : public ::testing::MatcherInterface<const arg_type&> {   \
@@ -5597,7 +5598,7 @@ PolymorphicMatcher<internal::ExceptionMatcherImpl<Err>> ThrowsMessage(
 #define GMOCK_INTERNAL_MATCHER_MEMBERS(args) \
   GMOCK_PP_FOR_EACH(GMOCK_INTERNAL_MATCHER_MEMBER, , args)
 #define GMOCK_INTERNAL_MATCHER_MEMBER(i_unused, data_unused, arg) \
-  const arg##_type arg;
+  arg##_type arg;
 
 #define GMOCK_INTERNAL_MATCHER_MEMBERS_USAGE(args) \
   GMOCK_PP_TAIL(GMOCK_PP_FOR_EACH(GMOCK_INTERNAL_MATCHER_MEMBER_USAGE, , args))

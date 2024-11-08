@@ -805,7 +805,7 @@ TEST(ExpectCallTest, InfersCardinality1WhenThereIsWillRepeatedly) {
 }
 
 #if defined(GTEST_INTERNAL_CPLUSPLUS_LANG) && \
-    GTEST_INTERNAL_CPLUSPLUS_LANG >= 201703L
+    GTEST_INTERNAL_CPLUSPLUS_LANG >= 201703L  && !defined(CAPS_COMPILER_VC)
 
 // It should be possible to return a non-moveable type from a mock action in
 // C++17 and above, where it's guaranteed that such a type can be initialized
