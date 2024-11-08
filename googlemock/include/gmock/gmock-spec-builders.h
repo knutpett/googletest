@@ -1437,7 +1437,7 @@ struct UntypedFunctionMockerBase::FailureCleanupHandler {
   const ExpectationBase* untyped_expectation;
   bool found;
   bool is_excessive;
-  FailureCleanupHandler() = delete;
+
   ~FailureCleanupHandler() {
     ss << "\n" << why.str();
 
@@ -1963,6 +1963,9 @@ class MockFunction<R(Args...)> {
  private:
   FunctionMocker<R(Args...)> mock_;
 };
+#ifdef CAPS_COMPILER_VC
+#pragma warning( pop )
+#endif
 
 /*
 The SignatureOf<F> struct is a meta-function returning function signature

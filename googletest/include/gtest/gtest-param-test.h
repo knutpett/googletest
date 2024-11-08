@@ -505,7 +505,7 @@ internal::ParamConverterGenerator<T> ConvertGenerator(
           __VA_ARGS__,                                                       \
           ::testing::internal::DefaultParamName<test_suite_name::ParamType>, \
           DUMMY_PARAM_)));                                                   \
-      auto t = std::make_tuple(__VA_ARGS__);                                 \
+      [[maybe_unused]] auto t = std::make_tuple(__VA_ARGS__);                \
       static_assert(std::tuple_size<decltype(t)>::value <= 2,                \
                     "Too Many Args!");                                       \
     }                                                                        \
