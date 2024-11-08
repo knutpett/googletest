@@ -1417,7 +1417,7 @@ class Cleanup final {
 struct UntypedFunctionMockerBase::UninterestingCallCleanupHandler {
   CallReaction reaction;
   std::stringstream& ss;
-
+  UninterestingCallCleanupHandler() = delete;
   ~UninterestingCallCleanupHandler() {
     ReportUninterestingCall(reaction, ss.str());
   }
@@ -1437,7 +1437,7 @@ struct UntypedFunctionMockerBase::FailureCleanupHandler {
   const ExpectationBase* untyped_expectation;
   bool found;
   bool is_excessive;
-
+  FailureCleanupHandler() = delete;
   ~FailureCleanupHandler() {
     ss << "\n" << why.str();
 
